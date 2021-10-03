@@ -1,17 +1,18 @@
-import express, { Router } from 'express'
+import express, {Router} from 'express'
 import userApi from './userRouter'
 import commentApi from './commentRouter'
 import postApi from './postRouter'
-const app=express()
-const router=express.Router()
+const app = express()
+const router = Router()
 router.route("/")
-.get(async (req, res, next) => {
-    console.log("dasdad");
+.get((req, res) => {
+    res.json({
+        echo: "The message is " 
+    })
 })
 
-app.use("./user",userApi)
-app.use("./comment",commentApi)
-app.use("./user",postApi)
+router.use("/user",userApi)
+router.use("/comment",commentApi)
+router.use("/post",postApi)
 
-export default app
-
+export default router

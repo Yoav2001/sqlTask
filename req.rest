@@ -1,6 +1,22 @@
 Get http://localhost:3000
 ###
-Get http://localhost:3000/api
+Post http://localhost:3000/api/user
+
+Content-Type: application/json
+{
+    "email":"eyal",
+    "password":"eyal1",
+    "userName":"eyal Golan",
+    "gender":"1"
+}
+
+###
+Get http://localhost:3000/api/user
+
+
+###
+Delete http://localhost:3000/api/user/"barLilus@gmail.com"
+
 
 
 

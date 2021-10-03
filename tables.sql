@@ -1,40 +1,42 @@
-CREATE TABLE t_user (
+-- user זה מילה שמורה לכן שם ככה
+CREATE TABLE users (
 	
 	email varchar(50) PRIMARY KEY NOT NULL,
 	pass varchar(50) NOT NULL,
-    fullName varchar(50) NOT NULL,
-    gender INT  NOT NULL
+    full_name varchar(50) NOT NULL,
+    gender INT NOT NULL
 );
 
+-- time_post type- Date
 
-CREATE TABLE t_post (
+CREATE TABLE usersPosts (
 	
-	idPost SERIAL PRIMARY KEY NOT NULL,	 
-    emailUser varchar(50)  NOT NULL references t_user(email),
-    textPost varchar(500) NOT NULL,
-    timePost varchar(50) NOT NULL,
-    urlPath VARCHAR(100)
+	post_id SERIAL PRIMARY KEY NOT NULL,	 
+    poster_email_user varchar(50)  NOT NULL references users(email),
+    text_post varchar(500) NOT NULL,
+    time_post TIMESTAMP NOT NULL,
+    url_path VARCHAR(100)
 );
 
-
-CREATE TABLE t_comment(
+-- time_Comment type- Date
+CREATE TABLE usersComments(
 	
-	idComment SERIAL PRIMARY KEY NOT NULL,
-	emailComment varchar(50) NOT NULL, 
-    textComment varchar(500) NOT NULL,
-    timeComment varchar(50) NOT NULL
+	comment_id SERIAL PRIMARY KEY NOT NULL,
+	commenter_email_user varchar(50) NOT NULL references users(email), 
+    text_comment varchar(500) NOT NULL,
+    time_comment TIMESTAMP NOT NULL
 );
 
-CREATE TABLE t_post_votes(
-	idPost INT NOT NULL references t_post(idPost),
-	emailUser varchar(50) NOT NULL, 
-    vote boolean NOT NULL
+CREATE TABLE postVotes(
+	post_id INT NOT NULL references usersPosts(post_id),
+	voter_email varchar(50) NOT NULL, 
+    vote_up boolean NOT NULL
 );
 
-CREATE TABLE t_comment_votes(
-    idComment INT NOT NULL references t_comment(idComment),
-    emailUser varchar(50) NOT NULL references t_user(email),
-    vote boolean NOT NULL
+CREATE TABLE commentVotes(
+    comment_id INT NOT NULL references usersComments(comment_id),
+    voter_email varchar(50) NOT NULL references users(email),
+    vote_up boolean NOT NULL
 );
 
 
