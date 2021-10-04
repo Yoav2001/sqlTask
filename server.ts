@@ -3,23 +3,37 @@ import path from 'path'
 import routerApi from './api/router'
 const app =express();
 import userService from './service/userService'
+import dotenv from 'dotenv';
+dotenv.config()
+app.use(express.json());
+// app.use(express.urlencoded());
+// var bodyParser = require('body-parser')
+// app.use(bodyParser.json())
+
+// app.use(bodyParser.urlencoded({ extended: true }))
+
 // import db from './dbQuery'
 // import router from './api/userRouter';
 // const bodyParser = require('body-parser');
 // const { response } = require('express');
 // const filePath=path.join(__dirname);
 
-app.use(express.json());
-var bodyParser = require('body-parser')
 
-app.use(bodyParser.urlencoded({ extended: false }))
-
-app.get('/', function(req, res) {
-    res.send("Hello world ")
-     const data =  userService.addUser("barLilus@gmail.com","213","bar lilus",1)
+app.get('/' ,function(req, res) {
+     console.log(req.body);
+  
+    res.send("Hello world "+req.body.email)
+    
+    //  const data =  userService.addUser("barLilus@gmail.com","213","bar lilus",1)
     //  const data2 =  userService.getUserWithEmail("barLilus@gmail.com")
-     console.log(data);
      
+});
+
+
+app.post('/' ,function(req, res) {
+  console.log(req.body)
+ res.send("Hello world "+req.body.email)
+  
 });
  
 app.use("/api",routerApi)

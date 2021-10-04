@@ -1,4 +1,6 @@
 import {Client, Pool} from 'pg'
+import { User } from '../models/userModel'
+
 const client = new Client({
     user: 'postgres',
     host: 'localhost',
@@ -12,6 +14,8 @@ client.connect();
 export function getAllUsersFromDB(){
 
   const sqlAllUsers= `SELECT * FROM users`
+  console.log(sqlAllUsers);
+  
   try{
     const res =  client.query(sqlAllUsers)
   } 
@@ -20,7 +24,7 @@ export function getAllUsersFromDB(){
     throw error;
   }
 } 
-const insertUser = (userName:string,password:string,email:string,gender:number)=> {
+const insertUser = (email:string,password:string,userName:string,gender:number)=> {
     const insertQuery = `INSERT INTO users (email,pass,full_name,gender)
             VALUES ('${email}','${password}','${userName}','${gender}')`;
             console.log(insertQuery);
@@ -38,15 +42,27 @@ const insertUser = (userName:string,password:string,email:string,gender:number)=
 }
 
 
- const getUserByEmail=(email:string)=> {
-    const selectByEmail = `SELECT * FROM users WHERE email ='${email}'`
-    try{
-      const res =  client.query(selectByEmail)
-    } 
+//  const getUserByEmail=(email:string)=> {
+//    let queryResult;
+//     const selectByEmail = `SELECT * FROM users WHERE email ='${email}'`
+//     try{
+//       const res =  client.query(selectByEmail, function(err, result) {
+//         if(err) { console.log(err); }
+//         else { queryResult = result.rows[0] }
+//     })
+//     } 
+//     catch (error) {
+//       throw error;
+//     }
+//     return queryResult;
 
-    catch (error) {
-      throw error;
-    }
+// }
+
+//write select user with type and async and await
+export async function getUserByEmail(email: string): Promise<User | undefined>{
+  const selectByEmail = `SELECT * FROM users WHERE email ='${email}'`
+  const res =  await (await client.query(selectByEmail)).rows[1]
+  return res;
 }
  
 

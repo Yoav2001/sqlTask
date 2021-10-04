@@ -2,6 +2,7 @@ import express, {Router} from 'express'
 import userApi from './userRouter'
 import commentApi from './commentRouter'
 import postApi from './postRouter'
+import postService from '../service/postService'
 const app = express()
 const router = Router()
 router.route("/")
@@ -10,6 +11,7 @@ router.route("/")
         echo: "The message is " 
     })
 })
+
 
 router.use("/user",userApi)
 router.use("/comment",commentApi)

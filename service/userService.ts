@@ -1,8 +1,10 @@
 import userDb from '../db/userQuery'
 import db = require("../db/userQuery");
 
-
+import type usersModel = require("../models/userModel")
 function getAllUsers (){
+    console.log("service");
+    
     try{
        return userDb.getAllUsersFromDB();
 
@@ -14,18 +16,32 @@ function getAllUsers (){
 
 }
 
-function addUser(email: string, password: string, name: string, gender:number){
-    try{
-        userDb.insertUser(email,password,name,gender)
-        return "the user insert to DB"
-    }
 
-    catch(error){
-        throw error;
-    }
+export const addUser : usersModel.AddUser = async ({email, password, fullName,gender}) => {
+    console.log(email);
+    
+    await userDb.insertUser(email,password,fullName,gender);
+    return userDb.getUserByEmail(email)
 }
 
 
+
+// function addUser(email: string, password: string, name: string, gender:number){
+//     try{
+//         userDb.insertUser(email,password,name,gender)
+//         return "the user insert to DB"
+//     }
+
+//     catch(error){
+//         throw error;
+//     }
+// }
+
+export const getUser: usersModel.GetUser = async (email) => {
+
+    const user = await userDb.getUserByEmail(email)
+    return user;
+}
 function getUserDataWithEmail (email?: string | undefined) {
     
     if(email !== undefined) return userDb.getUserByEmail(email);
