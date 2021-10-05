@@ -1,6 +1,18 @@
-function getAllPosts(){
+
+import type postModel = require("../models/postModel")
+import postDb from '../db/postQuery'
 
 
+export const getAllPosts :postModel.GetAllPost = async () => {
+    
+    try{
+        return await postDb.getAllPost();
+ 
+     }
+     catch(error)
+     {
+        console.log('Database ' + error)
+    }
 }
 
 function addNewPost(){
@@ -10,7 +22,7 @@ function addNewPost(){
  
 
 function getPostData(){
-
+sadasd
 
 
 }

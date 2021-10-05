@@ -1,4 +1,5 @@
 import {Client, Pool} from 'pg'
+import { json } from 'stream/consumers';
 import { User } from '../models/userModel'
 
 const client = new Client({
@@ -11,31 +12,46 @@ const client = new Client({
 
 
 client.connect();
-export function getAllUsersFromDB(){
 
+export async function getAllUsersFromDB ():Promise<User[] | undefined> {
   const sqlAllUsers= `SELECT * FROM users`
-  console.log(sqlAllUsers);
-  
-  try{
-    const res =  client.query(sqlAllUsers)
-  } 
 
-  catch (error) {
-    throw error;
+  try {
+    const { rows } = await client.query(sqlAllUsers)
+    console.log(JSON.stringify(rows))
+    return rows;
+  } catch (err) {
+    console.log('Database ' + err)
   }
-} 
+}
+// export function getAllUsersFromDB(){
+
+
+//   const sqlAllUsers= `SELECT * FROM users`
+//   console.log(sqlAllUsers);
+  
+//   try{
+//     const res =  client.query(sqlAllUsers)
+//   } 
+
+//   catch (error) {
+//     throw error;
+//   }
+// } 
+
+
 const insertUser = (email:string,password:string,userName:string,gender:number)=> {
+  
     const insertQuery = `INSERT INTO users (email,pass,full_name,gender)
             VALUES ('${email}','${password}','${userName}','${gender}')`;
-            console.log(insertQuery);
-            
+     console.log( email+" from insert "+insertQuery);
+
     try{
       const res =  client.query(insertQuery)
     } 
 
     catch (error) {
-
-    throw error;
+       throw error;
     }
 
 
@@ -58,20 +74,34 @@ const insertUser = (email:string,password:string,userName:string,gender:number)=
 
 // }
 
+
+
+
 //write select user with type and async and await
-export async function getUserByEmail(email: string): Promise<User | undefined>{
-  const selectByEmail = `SELECT * FROM users WHERE email ='${email}'`
-  const res =  await (await client.query(selectByEmail)).rows[1]
+export async function getUserByEmail(email : string): Promise<User | undefined>{
+  const selectByEmail = `SELECT * FROM users WHERE email = '${email}'`
+  console.log(selectByEmail);
+  // console.log(res);
+  
+  const res =   (await client.query(selectByEmail)).rows[0]
+
+   
+
+  // const res2 =   (await client.query(selectByEmail))
+  
+  console.log("res"+JSON.stringify(res));
+  // console.log(res2);
+  // console.log(JSON.stringify(res2));
   return res;
 }
  
 
 
 
-const deleteUserByEmail=(email:string)=> {
+const deleteUserByEmail= async(email:string)=> {
   const deleteByEmail = `Delete FROM users WHERE email ='${email}'`
   try{
-    const res =  client.query(deleteByEmail)
+    await client.query(deleteByEmail)
   } 
 
   catch (error) {

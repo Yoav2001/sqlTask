@@ -1,27 +1,32 @@
 import userDb from '../db/userQuery'
-import db = require("../db/userQuery");
-
 import type usersModel = require("../models/userModel")
-function getAllUsers (){
-    console.log("service");
+
+
+
+export const getAllUsers : usersModel.GetAllUsers = async () => {
     
     try{
-       return userDb.getAllUsersFromDB();
-
+        return await userDb.getAllUsersFromDB();
+ 
+     }
+     catch(error)
+     {
+        console.log('Database ' + error)
     }
-    catch(error)
-    {
-        throw error;
-    }
-
 }
 
 
+
 export const addUser : usersModel.AddUser = async ({email, password, fullName,gender}) => {
-    console.log(email);
-    
-    await userDb.insertUser(email,password,fullName,gender);
-    return userDb.getUserByEmail(email)
+    try{
+        userDb.insertUser(email,password,fullName,gender);
+     }
+     catch(error)
+     {
+        console.log('Database ' + error)
+    }
+    return await userDb.getUserByEmail(email)
+
 }
 
 
@@ -37,28 +42,56 @@ export const addUser : usersModel.AddUser = async ({email, password, fullName,ge
 //     }
 // }
 
-export const getUser: usersModel.GetUser = async (email) => {
-
-    const user = await userDb.getUserByEmail(email)
-    return user;
-}
-function getUserDataWithEmail (email?: string | undefined) {
-    
-    if(email !== undefined) return userDb.getUserByEmail(email);
-    return -1;
-} 
-
-
-function deleteUserWithEmail(email?: string | undefined){
+export const getUserDataWithEmail: usersModel.GetUser = async (email?: string | undefined) => {
+    if(email===undefined)
+         return undefined;
     try{
-        if(email !== undefined) return userDb.deleteUserByEmail(email)
+        const user = await userDb.getUserByEmail(email)
+        console.log( "service "+JSON.stringify(user));
+        
     }
-    catch(error){
-        throw error
+    catch(error)
+    {
+        throw error;
+    }
 
+    
+}
+// function getUserDataWithEmail (email?: string | undefined) {
+    
+//     if(email !== undefined) return userDb.getUserByEmail(email);
+//     return -1;
+// } 
+
+
+export const deleteUserWithEmail: usersModel.DeleteUser = async (email?: string | undefined) => {
+    if(email===undefined)
+         return "the email is undefined cant delete";
+
+    try{
+         userDb.deleteUserByEmail(email)
+
+    }   
+    catch(error){
+        throw error;
     }
+    if(userDb.getUserByEmail(email)===undefined)
+        return "user deleted"
+
+    return  "there was problem with delete the user"
 
 }
+
+// function deleteUserWithEmail(email?: string | undefined){
+//     try{
+//         if(email !== undefined) return userDb.deleteUserByEmail(email)
+//     }
+//     catch(error){
+//         throw error
+
+//     }
+
+// }
 function updateUserNameWithEmail(email?: string | undefined){
     if(email !== undefined)  userDb.updateUserNameByEmail(email);
 
