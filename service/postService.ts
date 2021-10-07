@@ -3,26 +3,35 @@ import type postModel = require("../models/postModel")
 import postDb from '../db/postQuery'
 
 
-export const getAllPosts :postModel.GetAllPost = async () => {
+export const getAllPosts :postModel.GetAllPosts = async () => {
     
     try{
-        return await postDb.getAllPost();
+        return await postDb.getAllPostFromDB();
  
      }
      catch(error)
      {
-        console.log('Database ' + error)
+        throw 'Database ' + error
     }
-}
-
-function addNewPost(){
-
 
 }
- 
+
+export const addNewPost: postModel.AddPost = async ({posterEmailUser, dateAndTimePoster, textPost,urlPath }) => {
+    try{
+     postDb.insertNewPost(posterEmailUser,textPost,dateAndTimePoster,urlPath);
+       
+     }
+     catch(error)
+     {
+         throw error
+        
+    }
+    const res :postModel.AddPostResult="Added Post"
+    return res;
+
+}
 
 function getPostData(){
-sadasd
 
 
 }

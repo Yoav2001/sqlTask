@@ -1,5 +1,5 @@
 export type Post = {
-    idPost: number,
+    idPost ?: number,
     posterEmailUser: string,
     dateAndTimePoster: string,
     textPost: string,
@@ -7,9 +7,12 @@ export type Post = {
 }
 
 
-export type getPost = (userId: Post["idPost"]) =>Promise<Post | undefined>;
-export type GetAllPostOfUserByEmail = (username: Post["posterEmailUser"])  => Promise<Post[] | undefined>;
-export type GetAllPost = () => Promise<Post[] | undefined>;
-export type AddPost = ({idPost,posterEmailUser,dateAndTimePoster,textPost,urlPath}: any) =>  Promise<Post | undefined>;
-export type DeleteUser = (userId: Post["posterEmailUser"]) => Promise<string>;
+export type AddPostResult = "Added Post" | "Failed to add Post"
+export type DeletePostResult = "delete Post" | "Faield to delete the Post"
+
+export type GetPost = (userId: Post["idPost"]) => Promise<Post | undefined>;
+export type GetAllPostsOfUserByEmail = (username: Post["posterEmailUser"])  => Promise<Post[] | undefined>;
+export type GetAllPosts = () => Promise<Post[]>;
+export type AddPost = (post: Post) =>  Promise<AddPostResult>;
+export type DeleteUser = (userId: Post["posterEmailUser"]) => Promise<DeletePostResult>;
 export type SetAdmin = (userId: Post["posterEmailUser"]) => Promise<Post>;

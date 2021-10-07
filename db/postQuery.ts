@@ -1,23 +1,36 @@
-
-const client = new Client({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'postgres',
-    password: 'y2o0a0v1',
-    port: 5432,
-});
 import { Post } from '../models/postModel';
 
+import pool from './connectionDb'
 
-client.connect();
-export async function getAllPostFromDB ():Promise<Post[] | undefined> {
-    const sqlAllUsers= `SELECT * FROM posts`
+export async function getAllPostFromDB ():Promise<Post[]> {
+  const client = await pool.connect();
+
+    const sqlAllPosts= `SELECT * FROM usersPosts`
   
     try {
-      const { rows } = await client.query(sqlAllUsers)
+      const { rows } = await client.query(sqlAllPosts)
+     
       console.log(JSON.stringify(rows))
       return rows;
-    } catch (err) {
-      console.log('Database ' + err)
+    } catch (error) {
+      throw error      
     }
+    
   }
+
+const insertNewPost = async (email:string,textPost:string,timePost:string,urlPath:string) => {
+  const client = await pool.connect();
+  console.log(textPost+" "+"");
+  
+  const insertQuery:string = `INSERT INTO usersPosts (poster_email_user,text_post,time_post,url_path)
+          VALUES ('${email}','${textPost}','${timePost}','${urlPath}')`;
+   console.log( email+" from insert "+insertQuery);
+    
+
+    client.query(insertQuery)
+    .catch((error)=>{
+      throw error;
+    })
+}
+
+export default {getAllPostFromDB,insertNewPost}

@@ -8,19 +8,18 @@ const router = Router()
 router.route("/")
     .get(async (req:express.Request, res:express.Response, next:express.NextFunction) => {
         
-        const data =  postService.getAllPosts();
-        console.log(data);
+        const data = await postService.getAllPosts();
         
         res.json(data);
     }) .post( (req:express.Request, res:express.Response, next:express.NextFunction) => {
-        const posterEmailUser:string = <string>req.body.posterEmail;
-        const dateAndTimePoster=getDateAndTimeNow();
+        const posterUser:string = <string>req.body.posterEmail;
+        const timePoster=getDateAndTimeNow();
         const textPost:string = <string>req.body.textPost;
         const urlPath:string =<string>req.body.urlPath;
-        const post={posterEmail:posterEmailUser,timePost:dateAndTimePoster,textPost:textPost,urlPath:urlPath}
+        // const post={posterEmailUser:posterEmailUser,dateAndTimePoster:dateAndTimePoster,textPost:textPost,urlPath:urlPath}
+        const p:Post={posterEmailUser:posterUser,dateAndTimePoster:timePoster,textPost:textPost,urlPath:urlPath}
+        postService.addNewPost(p);        
 
-        postService.addNewPost(post)    
-    
     });
 
 
