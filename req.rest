@@ -1,17 +1,10 @@
-Get http://localhost:3000
+
+Post http://localhost:3000/api/login
 Content-Type: application/json
 
 {
-    "email":"eyal"
-   
-}
-###
-
-Post http://localhost:3000
-Content-Type: application/json
-
-{
-    "email":"eyal"
+    "email":"matan@gmail.com",
+    "password":"matan1"
    
 }
 
@@ -25,28 +18,37 @@ Post http://localhost:3000/api/user
 Content-Type: application/json
 
 {
-    "email":"menu@gmail.com",
-    "password":"menu1",
-    "userName":"menu ear",
+    "email":"dani@gmail.com",
+    "password":"pmo12",
+    "userName":"dani Pmo",
     "gender":"1"
 }
 
 ###
-Get http://localhost:3000/api/user/eyal Golan
+Get http://localhost:3000/api/user/dani@gmail.com
 
 
 ###
-Delete http://localhost:3000/api/user/undefined
+Delete http://localhost:3000/api/user/menu@gmail.com 
+Authorization: Bearer "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJtYXRhbkBnbWFpbC5jb20iLCJwYXNzd29yZCI6Im1hdGFuMSIsImlhdCI6MTYzMzYxNDEyOX0.HhfiMO5IwFTAc1KHm_nTkkpJAL2UuvNyFeNpucKaeYU\"
+
+
 
 ###
 Post http://localhost:3000/api/post
 Content-Type: application/json
 
 {
-    "posterEmail":"eyal",
-    "textPost":"eyal1",
-    "urlPath":"1"
+    "posterEmail":"matan@gmail.com",
+    "textPost":"first post of matan",
+    "urlPath":"http://githUB"
 }
+###
+Get http://localhost:3000/api/post
+
+
+
+
 
 
 

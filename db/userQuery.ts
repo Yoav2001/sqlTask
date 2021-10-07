@@ -1,50 +1,28 @@
 import {Client, Pool} from 'pg'
 import { json } from 'stream/consumers';
 import { User } from '../models/userModel'
+import pool from './connectionDb'
 
-const client = new Client({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'postgres',
-    password: 'y2o0a0v1',
-    port: 5432,
-});
-
-
-client.connect();
 
 export async function getAllUsersFromDB ():Promise<User[] | undefined> {
+  const client = await pool.connect();
   const sqlAllUsers= `SELECT * FROM users`
 
   try {
     const { rows } = await client.query(sqlAllUsers)
-    console.log(JSON.stringify(rows))
     return rows;
   } catch (err) {
     console.log('Database ' + err)
   }
 }
-// export function getAllUsersFromDB(){
 
 
-//   const sqlAllUsers= `SELECT * FROM users`
-//   console.log(sqlAllUsers);
-  
-//   try{
-//     const res =  client.query(sqlAllUsers)
-//   } 
 
-//   catch (error) {
-//     throw error;
-//   }
-// } 
+ const insertUser = async(email:string,password:string,userName:string,gender:number)=> {
+  const client = await pool.connect();
 
-
-const insertUser = (email:string,password:string,userName:string,gender:number)=> {
-  
     const insertQuery = `INSERT INTO users (email,pass,full_name,gender)
             VALUES ('${email}','${password}','${userName}','${gender}')`;
-     console.log( email+" from insert "+insertQuery);
 
     try{
       const res =  client.query(insertQuery)
@@ -58,40 +36,15 @@ const insertUser = (email:string,password:string,userName:string,gender:number)=
 }
 
 
-//  const getUserByEmail=(email:string)=> {
-//    let queryResult;
-//     const selectByEmail = `SELECT * FROM users WHERE email ='${email}'`
-//     try{
-//       const res =  client.query(selectByEmail, function(err, result) {
-//         if(err) { console.log(err); }
-//         else { queryResult = result.rows[0] }
-//     })
-//     } 
-//     catch (error) {
-//       throw error;
-//     }
-//     return queryResult;
-
-// }
 
 
 
 
 //write select user with type and async and await
 export async function getUserByEmail(email : string): Promise<User | undefined>{
+  const client = await pool.connect();
   const selectByEmail = `SELECT * FROM users WHERE email = '${email}'`
-  console.log(selectByEmail);
-  // console.log(res);
-  
   const res =   (await client.query(selectByEmail)).rows[0]
-
-   
-
-  // const res2 =   (await client.query(selectByEmail))
-  
-  console.log("res"+JSON.stringify(res));
-  // console.log(res2);
-  // console.log(JSON.stringify(res2));
   return res;
 }
  
@@ -99,6 +52,8 @@ export async function getUserByEmail(email : string): Promise<User | undefined>{
 
 
 const deleteUserByEmail= async(email:string)=> {
+  const client = await pool.connect();
+
   const deleteByEmail = `Delete FROM users WHERE email ='${email}'`
   try{
     await client.query(deleteByEmail)
@@ -109,7 +64,9 @@ const deleteUserByEmail= async(email:string)=> {
   }
 }
 
-const updateUserNameByEmail=(email:string)=> {
+const updateUserNameByEmail=async(email:string)=> {
+  const client = await pool.connect();
+
   const updateByEmail = `update FROM users WHERE email ='${email}'`
   try{
     const res =  client.query(updateByEmail)
@@ -119,6 +76,8 @@ const updateUserNameByEmail=(email:string)=> {
     throw error;
   }
 }
+
+
 
 
 

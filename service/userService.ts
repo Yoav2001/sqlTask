@@ -46,8 +46,8 @@ export const getUserDataWithEmail: usersModel.GetUser = async (email?: string | 
     if(email===undefined)
          return undefined;
     try{
-        const user = await userDb.getUserByEmail(email)
-        console.log( "service "+JSON.stringify(user));
+        return await userDb.getUserByEmail(email)
+        // console.log( "service "+JSON.stringify(user));
         
     }
     catch(error)
@@ -55,18 +55,18 @@ export const getUserDataWithEmail: usersModel.GetUser = async (email?: string | 
         throw error;
     }
 
+
     
 }
-// function getUserDataWithEmail (email?: string | undefined) {
-    
-//     if(email !== undefined) return userDb.getUserByEmail(email);
-//     return -1;
-// } 
 
 
 export const deleteUserWithEmail: usersModel.DeleteUser = async (email?: string | undefined) => {
     if(email===undefined)
-         return "the email is undefined cant delete";
+        return "the email is undefined cant delete";
+
+        
+    // if(userDb.getUserByEmail(email)===undefined)
+    //     return "this email Not registered in the system"
 
     try{
          userDb.deleteUserByEmail(email)
@@ -75,10 +75,10 @@ export const deleteUserWithEmail: usersModel.DeleteUser = async (email?: string 
     catch(error){
         throw error;
     }
-    if(userDb.getUserByEmail(email)===undefined)
-        return "user deleted"
+    
+    return "the user was deleted"
+   
 
-    return  "there was problem with delete the user"
 
 }
 
