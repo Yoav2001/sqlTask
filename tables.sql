@@ -22,7 +22,8 @@ CREATE TABLE usersPosts (
 CREATE TABLE usersComments(
 	
 	comment_id SERIAL PRIMARY KEY NOT NULL,
-	commenter_email_user varchar(50) NOT NULL references users(email), 
+	commenter_email_user varchar(50) NOT NULL references users(email),
+    post_id_of_comment INT NOT NULL references usersPosts(post_id),
     text_comment varchar(500) NOT NULL,
     time_comment TIMESTAMP NOT NULL
 );
@@ -40,3 +41,4 @@ CREATE TABLE commentVotes(
 );
 
 
+--DROP TABLE commentVotes , postVotes , usersComments , usersPosts , users;
