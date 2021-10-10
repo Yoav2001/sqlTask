@@ -1,33 +1,71 @@
 
-function getAllComments(){
+import type commentModel = require("../models/commentModel")
+import commentDb from '../db/commentQuery'
 
 
-}
-
-function addNewComment(posterEmailUser: string,idPost: number,commentText: string){
-
-
-}
+export const getAllComments :commentModel.GetAllcomments = async () => {
+    
+    try{
+        return await commentDb.getAllCommentsFromDB();
  
+     }
+     catch(error)
+     {
+        throw 'Database ' + error
+    }
 
-function getCommentData(){
+}
+export type Comment = {
+    idComment ?: number,
+    commenterEmailUser: string,
+    textComment: string 
+    dateAndTimeComment: string
+}
 
+export const addNewComment: commentModel.AddComment = async (c : commentModel.Comment) => {
+    try{
 
+     commentDb.insertNewComment(c);
+       
+     }
+     catch(error)
+     {
+         throw error
+        
+        
+    }
+    const res :commentModel.AddCommentResult="Added Comment Succeeded"
+    return res;
 
 }
 
-
-function getCommentsOfUser(){
+export const getAllCommentsOfUser :commentModel.GetAllcommentsOfUserByEmail = async (email:string) => {
+    console.log("service");
+    
+    try{
+        return await commentDb.getAllCommentsUserByEmail(email);
+ 
+     }
+     catch(error)
+     {
+        throw 'Database ' + error
+    }
 
 }
-
-function updateTextOfComment(){
-
-
-}
+// function getPostData(){
 
 
-export default {getAllComments,addNewComment,getCommentData,getCommentsOfUser,updateTextOfComment}
+// }
 
 
+// function getPostsOfUser(){
 
+// }
+
+// function updateTextOfPost(){
+
+
+// }
+
+
+export default {getAllComments,addNewComment,getAllCommentsOfUser}
