@@ -1,4 +1,6 @@
 
+//users-----------------------------
+
 Post http://localhost:3000/api/login
 Content-Type: application/json
 
@@ -18,9 +20,9 @@ Post http://localhost:3000/api/user
 Content-Type: application/json
 
 {
-    "email":"dani@gmail.com",
-    "password":"pmo12",
-    "userName":"dani Pmo",
+    "email":"eliBen@gmail.com",
+    "password":"eli1",
+    "userName":"eli ben",
     "gender":"1"
 }
 
@@ -29,25 +31,46 @@ Get http://localhost:3000/api/user/dani@gmail.com
 
 
 ###
-Delete http://localhost:3000/api/user/menu@gmail.com 
+Delete http://localhost:3000/api/user/matan@gmail.com 
 Authorization: Bearer "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJtYXRhbkBnbWFpbC5jb20iLCJwYXNzd29yZCI6Im1hdGFuMSIsImlhdCI6MTYzMzYxNDEyOX0.HhfiMO5IwFTAc1KHm_nTkkpJAL2UuvNyFeNpucKaeYU\"
 
 
+//posts---------------------------------
 
 ###
 Post http://localhost:3000/api/post
 Content-Type: application/json
 
 {
-    "posterEmail":"matan@gmail.com",
-    "textPost":"first post of matan",
-    "urlPath":"http://githUB"
+    "posterEmail":"yonatnelki@gmail.com",
+    "textPost":"my second post",
+    "urlPath":"http://football"
 }
 ###
 Get http://localhost:3000/api/post
 
 
+###
+Get http://localhost:3000/api/post/matan@gmail.com 
 
+//comments -------------------------------------------------
+
+###
+Post http://localhost:3000/api/comment
+Content-Type: application/json
+
+{
+    "commenterEmail":"eliBen@gmail.com",
+    "postIdOfComment":7,
+    "textComment":"good post yonatan hhhhhhhhhhhhhh"
+    
+}
+###
+Get http://localhost:3000/api/comment
+
+
+###
+Get http://localhost:3000/api/post/matan@gmail.com 
 
 
 
