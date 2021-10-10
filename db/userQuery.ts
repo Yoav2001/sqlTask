@@ -18,11 +18,11 @@ export async function getAllUsersFromDB ():Promise<User[] | undefined> {
 
 
 
- const insertUser = async(email:string,password:string,userName:string,gender:number)=> {
+ const insertUser = async(userObj : User)=> {
   const client = await pool.connect();
 
     const insertQuery = `INSERT INTO users (email,pass,full_name,gender)
-            VALUES ('${email}','${password}','${userName}','${gender}')`;
+            VALUES ('${userObj.email}','${userObj.password}','${userObj.userName}','${userObj.gender}')`;
 
     try{
       const res =  client.query(insertQuery)

@@ -18,13 +18,12 @@ export async function getAllPostFromDB ():Promise<Post[]> {
     
   }
 
-const insertNewPost = async (email:string,textPost:string,timePost:string,urlPath:string) => {
+const insertNewPost = async (post:Post) => {
   const client = await pool.connect();
-  console.log(textPost+" "+"");
   
   const insertQuery:string = `INSERT INTO usersPosts (poster_email_user,text_post,time_post,url_path)
-          VALUES ('${email}','${textPost}','${timePost}','${urlPath}')`;
-   console.log( email+" from insert "+insertQuery);
+          VALUES ('${post.posterEmailUser}','${post.textPost}','${post.dateAndTimePoster}','${post.urlPath}')`;
+   console.log( insertQuery);
     
 
     client.query(insertQuery)
@@ -33,4 +32,38 @@ const insertNewPost = async (email:string,textPost:string,timePost:string,urlPat
     })
 }
 
-export default {getAllPostFromDB,insertNewPost}
+
+ async function getAllPostUserByEmail (email : string ):Promise<Post[]> {
+  const client = await pool.connect();
+
+    const sqlAllPostsOfUser= `SELECT * FROM usersPosts WHERE poster_email_user = '${email}' `
+  console.log(sqlAllPostsOfUser);
+  
+    try {
+      const { rows } = await client.query(sqlAllPostsOfUser)
+     
+      console.log(JSON.stringify(rows))
+      return rows;
+    } catch (error) {
+      throw error      
+    }
+    
+  }
+
+
+  // async function deletePost (email : string ,timePost):Promise<Post[]> {
+  //   const client = await pool.connect();
+  
+  //     const sqlAllPostsOfUser= `SELECT * FROM usersPosts WHERE email = '${email}' `
+    
+  //     try {
+  //       const { rows } = await client.query(sqlAllPostsOfUser)
+       
+  //       console.log(JSON.stringify(rows))
+  //       return rows;
+  //     } catch (error) {
+  //       throw error      
+  //     }
+      
+  //   }
+export default {getAllPostFromDB,insertNewPost,getAllPostUserByEmail}

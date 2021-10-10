@@ -16,13 +16,21 @@ router.route("/")
         const timePoster=getDateAndTimeNow();
         const textPost:string = <string>req.body.textPost;
         const urlPath:string =<string>req.body.urlPath;
-        // const post={posterEmailUser:posterEmailUser,dateAndTimePoster:dateAndTimePoster,textPost:textPost,urlPath:urlPath}
         const p:Post={posterEmailUser:posterUser,dateAndTimePoster:timePoster,textPost:textPost,urlPath:urlPath}
-        postService.addNewPost(p);        
+       res.json(postService.addNewPost(p))          
 
     });
 
-
+    router.route("/:email")
+    
+    .get(async (req, res, next) => {
+        const email:string = <string>req.params.email;     
+        console.log(email);
+        
+        const data = await postService.getAllPostsOfUser(email);
+        console.log(data)
+        res.json({ key: data });
+    })
     
 function getDateAndTimeNow(){
     const today = new Date();

@@ -16,14 +16,14 @@ export const getAllPosts :postModel.GetAllPosts = async () => {
 
 }
 
-export const addNewPost: postModel.AddPost = async ({posterEmailUser, dateAndTimePoster, textPost,urlPath }) => {
+export const addNewPost: postModel.AddPost = async (post:postModel.Post) => {
     try{
-     postDb.insertNewPost(posterEmailUser,textPost,dateAndTimePoster,urlPath);
-       
+        postDb.insertNewPost(post); 
      }
      catch(error)
      {
          throw error
+        
         
     }
     const res :postModel.AddPostResult="Added Post"
@@ -31,6 +31,19 @@ export const addNewPost: postModel.AddPost = async ({posterEmailUser, dateAndTim
 
 }
 
+export const getAllPostsOfUser :postModel.GetAllPostsOfUserByEmail = async (email:string) => {
+    console.log("service");
+    
+    try{
+        return await postDb.getAllPostUserByEmail(email);
+ 
+     }
+     catch(error)
+     {
+        throw 'Database ' + error
+    }
+
+}
 function getPostData(){
 
 
@@ -47,4 +60,4 @@ function updateTextOfPost(){
 }
 
 
-export default {getAllPosts,addNewPost,getPostData,getPostsOfUser,updateTextOfPost}
+export default {getAllPosts,addNewPost,getAllPostsOfUser,getPostData,updateTextOfPost}

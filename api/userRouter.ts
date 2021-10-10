@@ -8,18 +8,11 @@ import { authenticateAdmin } from '../logic/auth';
 
 //2 הבקשות תקינות לגמרי פה
 router.route("/")
-    .get(async (req:express.Request, res:express.Response, next:express.NextFunction) => {
-        
+    .get(async (req:express.Request, res:express.Response, next:express.NextFunction) => {  
          const data = await userService.getAllUsers();
-        // const data2=userDb.getAllUserWithPool();
-        // console.log(data2);
-        
-        // res.json(data2)
         res.json(data);
     })
     .post( (req, res, next) => {
-        
-        
         const userName:string = <string>req.body.userName;
         const password:string = <string>req.body.password;
         const email:string = <string>req.body.email;
