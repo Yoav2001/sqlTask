@@ -1,7 +1,7 @@
 import exp from 'express';
 import jwt from 'jsonwebtoken';
 import { User } from '../models/userModel'
-const jwtSecret: string = "yalh beitar";
+const jwtSecret :string="bommer"
 
 // type TokenStructure = {
 //     username: string,
@@ -33,15 +33,20 @@ export function getSignedUserType(req: exp.Request,res:exp.Response):User{
    
 
 export function authed(req: exp.Request, res: exp.Response, next: exp.NextFunction): void{
+    console.log("asdsa");
+    
     const bearerHeader: string | undefined = req.headers["authorization"];
     if(typeof bearerHeader !== 'undefined'){
         const bearer: string[] = bearerHeader.split(" ");
         const bearerToken: string = bearer[1];
+        console.log(bearerToken);
         jwt.verify(bearerToken, jwtSecret, (err, data) => {
             if(err){
+                console.log(err);
                 res.status(401);
             }
             else{
+                console.log("auth");   
                 next();
             }
         });
@@ -68,3 +73,5 @@ export function authenticateAdmin(req:exp.Request, res:exp.Response, next:exp.Ne
         res.status(403).json('this user dont have Permissions');
     }
 }
+
+

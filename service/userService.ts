@@ -73,6 +73,10 @@ function updateUserNameWithEmail(email?: string | undefined){
 
 } 
 
+// function isUserRegistered(email :string , password : string) :boolean{
+
+    
+// }
 
 
 

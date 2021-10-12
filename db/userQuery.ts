@@ -10,6 +10,7 @@ export async function getAllUsersFromDB ():Promise<User[] | undefined> {
 
   try {
     const { rows } = await client.query(sqlAllUsers)
+    client.release();//משחרר את 
     return rows;
   } catch (err) {
     console.log('Database ' + err)

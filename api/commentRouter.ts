@@ -2,6 +2,7 @@ import express from 'express';
 import { Router } from 'express'
 import commentService from '../service/commentService'
 import { Comment } from '../models/commentModel';
+import { authed } from '../logic/auth';
 const router = Router()
 
 
@@ -11,13 +12,13 @@ router.route("/")
         const data = await commentService.getAllComments();
         
         res.json(data);
-    }) .post( (req:express.Request, res:express.Response, next:express.NextFunction) => {
+    }) .post(authed,async (req:express.Request, res:express.Response, next:express.NextFunction) => {
         const emailUser:string = <string>req.body.commenterEmail;
         const postIdOfComment :number=req.body.postIdOfComment
         const timePoster=getDateAndTimeNow();
         const textComment:string = <string>req.body.textComment;
         const c:Comment={commenterEmailUser:emailUser,postIdOfComment:postIdOfComment,dateAndTimeComment:timePoster,textComment:textComment}
-       res.json(commentService.addNewComment(c))          
+       res.json( await commentService.addNewComment(c))          
 
     });
 

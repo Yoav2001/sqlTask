@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 
 const app = express()
 const router = Router()
-const jwtSecret='bommer'
+const jwtSecret :string="bommer"
 router.route("/login")
     .post((req:express.Request, res:express.Response, next) => {
         // Authenticate User
@@ -15,6 +15,8 @@ router.route("/login")
          console.log(user.password);
          
         const token = jwt.sign(user, jwtSecret)
+        
+        
         if(token===undefined||token===null)
            res.status(403).json('this user dont have Permissions');
 

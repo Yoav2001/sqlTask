@@ -2,6 +2,7 @@ import express from 'express';
 import { Router } from 'express'
 import postService from '../service/postService';
 import { Post } from '../models/postModel';
+import { authed } from '../logic/auth';
 const router = Router()
 
 
@@ -11,13 +12,15 @@ router.route("/")
         const data = await postService.getAllPosts();
         
         res.json(data);
-    }) .post( (req:express.Request, res:express.Response, next:express.NextFunction) => {
+    }) .post( authed,async (req:express.Request, res:express.Response, next:express.NextFunction) => {
+        console.log("aa");
+        
         const posterUser:string = <string>req.body.posterEmail;
         const timePoster=getDateAndTimeNow();
         const textPost:string = <string>req.body.textPost;
         const urlPath:string =<string>req.body.urlPath;
         const p:Post={posterEmailUser:posterUser,dateAndTimePoster:timePoster,textPost:textPost,urlPath:urlPath}
-       res.json(postService.addNewPost(p))          
+       res.json( await postService.addNewPost(p))          
 
     });
 
