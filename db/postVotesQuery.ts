@@ -23,8 +23,10 @@ export async function getAllVotes ():Promise<PostVote[]> {
 const insertNewVote = async (vote :PostVote) => {
   const client = await pool.connect();
   
-  const insertQuery:string = `INSERT INTO postVotes (voter_email,vote_up)
-          VALUES ('${vote.voterEmail}','${vote.isVoteUp}')`;
+  const insertQuery:string = `INSERT INTO postVotes (post_id,voter_email,vote_up)
+          VALUES ('${vote.postId}','${vote.voterEmail}',${vote.isVoteUp})`;
+          console.log(insertQuery);
+          
    console.log(+insertQuery);
     
 

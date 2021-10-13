@@ -2,7 +2,7 @@ import express from 'express';
 import { User } from '../models/userModel';
 import userService from '../service/userService'
 const router=express.Router();
-    import userDb from '../db/userQuery'
+import userDb from '../db/userQuery'
 import { authed } from '../logic/auth';
 import { authenticateAdmin } from '../logic/auth';
 

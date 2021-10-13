@@ -1,5 +1,5 @@
 export type PostVote = {
-    postId ?: number,
+    postId : number,
     voterEmail: string,
    isVoteUp:boolean
 

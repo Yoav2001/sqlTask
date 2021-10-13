@@ -74,6 +74,19 @@ Get http://localhost:3000/api/comment
 ###
 Get http://localhost:3000/api/post/matan@gmail.com 
 
+//postVotes-api
+
+###
+Post http://localhost:3000/api/post/votes
+Content-Type: application/json
+
+{
+    "voterEmail":"eliBen@gmail.com",
+    "postId":7,
+    "isVoteUp":true
+    
+}
+
 
 
 

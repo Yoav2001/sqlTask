@@ -3,6 +3,8 @@ import { Router } from 'express'
 import postService from '../service/postService';
 import { Post } from '../models/postModel';
 import { authed } from '../logic/auth';
+import postVotesApi from './postVotesRouter'
+
 const router = Router()
 
 
@@ -43,4 +45,6 @@ function getDateAndTimeNow(){
     return dateTime;
 
 }
+
+
 export default router

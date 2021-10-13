@@ -2,6 +2,8 @@ import express, {Router} from 'express'
 import userApi from './userRouter'
 import commentApi from './commentRouter'
 import postApi from './postRouter'
+import postVotesApi from './postVotesRouter'
+import commentVotesApi from './commentVotesRouter'
 import { User } from '../models/userModel'
 import jwt from 'jsonwebtoken';
 
@@ -28,5 +30,7 @@ router.route("/login")
 router.use("/user",userApi)
 router.use("/comment",commentApi)
 router.use("/post",postApi)
+router.use("/postVotes",postVotesApi)
+ router.use("/commentVotes",commentVotesApi)
 
 export default router
